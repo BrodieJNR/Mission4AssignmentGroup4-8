@@ -1,18 +1,10 @@
-﻿
-
-using Mission4AssignmentGroup4_8;
+﻿using Mission4AssignmentGroup4_8;
 using System;
-using System.Linq.Expressions;
-using System.Security.Principal;
-
 
 class Program
 {
-
     static void Main()
     {
-
-    
         Console.WriteLine("Welcome to Tic Tac Toe!");
         Console.WriteLine("Players will take turns choosing the spots using 0-8!");
 
@@ -27,7 +19,7 @@ class Program
 
             string symbol = currentPlayer == 1 ? "X" : "O";
 
-            Console.WriteLine($"PLayer {currentPlayer} choose a position 0-8: ");
+            Console.WriteLine($"Player {currentPlayer} choose a position 0-8: ");
             string choice = Console.ReadLine();
 
             if (!int.TryParse(choice, out int position) || position < 0 || position > 8)
@@ -45,8 +37,26 @@ class Program
             }
 
             board[position] = symbol;
-
+            
             win = Supporting.CheckWinner(board);
+            
+            if (win == "")
+            {
+                bool boardFull = true;
+                foreach (string space in board)
+                {
+                    if (space != "X" && space != "O")
+                    {
+                        boardFull = false;
+                        break;
+                    }
+                }
+
+                if (boardFull)
+                {
+                    win = "Draw";
+                }
+            }
 
             if (win == "")
             {
@@ -63,7 +73,6 @@ class Program
         }
         else
         {
-            
             int winnerNumber = win == "X" ? 1 : 2;
             Console.WriteLine($"Player {winnerNumber} ({win}) wins!");
         }
